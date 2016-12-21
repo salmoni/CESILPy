@@ -89,7 +89,9 @@ class CESILObj(object):
 
     def parse_line(self, line):
         # Split the line into words
+        # First by partitioning quotes out (strings)...
         strings = line.split('"')
+        # ...then but "chunk"
         words = strings[0].split()
         try:
             words.append(strings[1])
