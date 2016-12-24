@@ -6,27 +6,34 @@ LOOP    STORE   TOTAL
         STORE   T3
         LOAD    T2
         PRINT   "Hi there"
-        PRINT   "KEeP going"
+        PRINT   "KeeP going"
         LINE
         ADD     33
-        PRINT "Accumulator is "
+        PRINT   "Accumulator is "
         OUT
         ADD     T3
         LINE
-        PRINT "Accumulator is "
+        PRINT   "Accumulator is "
         OUT
 
         DIVIDE    4
         LINE
-        PRINT "Accumulator is "
+        PRINT   "Accumulator is "
         OUT
 
         DIVIDE    T2
         LINE
-        PRINT "Accumulator is "
+        PRINT   "Accumulator is "
+        OUT
+        LINE
+        PRINT   "Enter an integer "
+        IN      InVal
+        LINE
+        PRINT   "You entered "
         OUT
 
         LINE
+        PRINT   "So there!!"
         HALT
         
 
