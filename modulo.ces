@@ -1,0 +1,51 @@
+        PRINT   "Modulo for CESIL"
+        LINE
+        LINE
+LOOP    PRINT   "Enter the numerator : "
+        IN      
+        STORE   NUMER
+        LINE
+        PRINT   "Enter the denominator : "
+        IN      
+        STORE   DENOM
+        LINE
+        LOAD    NUMER
+        PRINT   "SUM: "
+        OUT
+        PRINT   " divides into "
+        LOAD    DENOM
+        OUT
+        PRINT   " a total of "
+        LOAD    NUMER
+        DIVIDE  DENOM
+        OUT
+        PRINT   " times and has a remainder of "
+        MULTIPLYDENOM
+        STORE   EXACTVAL
+        LOAD    NUMER
+        SUBTRACTEXACTVAL
+        OUT
+        PRINT   "."
+        LINE
+        LINE
+        PRINT   "Do another sum?"
+        LINE
+        PRINT   "Negative number to do another..."
+        LINE
+        PRINT   "Zero to stop..."
+        LINE
+        PRINT   "Positive number to display inanity:"
+        LINE
+        LINE
+        PRINT   "Enter your choice now : "
+        IN
+        JINEG   LOOP
+        JIZERO  HALTTHIS
+        JUMP    INANITY
+
+HALTTHISHALT
+
+INANITY LINE
+        PRINT   "You expect something clever?!"
+        HALT
+        
