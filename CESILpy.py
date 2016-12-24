@@ -159,13 +159,13 @@ class CESILObj(object):
                 else:
                     self.acc = int(self.acc / value)
         elif operator == "JUMP":
-            self.linenum = self.labels[words[-1]]
+            self.linenum = self.labels[operand]
         elif operator == "JIZERO":
             if self.acc == 0:
-                self.linenum = self.labels[words[-1]]
+                self.linenum = self.labels[operand]
         elif operator == "JINEG":
             if self.acc < 0:
-                self.linenum = self.labels[words[-1]]
+                self.linenum = self.labels[operand]
 
 if __name__ == "__main__":
     try:
