@@ -40,7 +40,7 @@ class CESILObj(object):
             line_len = len(line)
             if len(line) > 0:
                 # is not an empty line
-                if line[0] == '%':
+                if line[0] == '*':
                     pass
                 else:
                     if line_len < 9:
@@ -74,7 +74,7 @@ class CESILObj(object):
                 if initword not in self.labels.keys():
                     self.labels[initword] = idx
                 else:
-                    print("### ERROR ### DUPLICATE LABEL ON LINE "+str(idx))
+                    print("### ERROR ### DUPLICATE LABEL ON LINE "+str(idx)+line[0])
                     sys.exit()
 
     def ParseVariables(self):
