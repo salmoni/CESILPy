@@ -13,7 +13,7 @@ I've tried to keep CESILPy as accurate as possible. I think this was standard fo
 
 Programs are formatted into 3 columns.
 
-Comments begin with "%" as the first character in the line. Anything else on the line is ignored. Multi-line comments are not possible.
+Comments begin with an asterisk * as the first character in the line. Anything else on the line is ignored. Multi-line comments are not possible.
 
 Empty lines are not parsed but ignored.
 
