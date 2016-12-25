@@ -24,7 +24,10 @@ class CESILObj(object):
             print("Cannot close the file %s but will continue nevertheless"%fname)
         self.fname = fname
         self.script = script.split(os.linesep)
+        self.data = []
+        self.dataindex = 0
         self.ParseScript()
+        self.ParseData()
         self.commands = ["LOAD","STORE","JUMP","JINEG","JIZERO","PRINT","OUT",
                 "IN","LINE","HALT","ADD","SUBTRACT","MULTIPLY","DIVIDE"]
         self.acc = 0 # accumulator
@@ -62,6 +65,19 @@ class CESILObj(object):
                             word3 = word3.strip(' ')
                     self.newscript.append([word1, word2, word3])
 
+    def ParseData(self):
+        idx = 0
+        for idx, line in enumerate(self.script):
+            try:
+                if line[8] == "%":
+                    datablock = self.script[idx+1:]
+                    for dataline in datablock:
+                        data = dataline.strip()
+                        if len(data) > 0:
+                            self.data.append(data)
+            except IndexError:
+                pass
+
     def ParseLabels(self):
         """
         This runs through and extracts all label names and stores them with the
@@ -75,7 +91,7 @@ class CESILObj(object):
                     self.labels[initword] = idx
                 else:
                     print("### ERROR ### DUPLICATE LABEL ON LINE "+str(idx)+line[0])
-                    sys.exit()
+                    self.halt_good()
 
     def ParseVariables(self):
         """
@@ -96,11 +112,9 @@ class CESILObj(object):
                 pass
 
     def halt_good(self):
-        print ('\n%')
         sys.exit()
 
     def RunScript(self):
-        print("%")
         self.linenum = 0
         while True:
             line = self.newscript[self.linenum]
@@ -120,6 +134,14 @@ class CESILObj(object):
         if operator == "HALT":
             self.halt_good()
         elif operator == "IN":
+            data = self.data[self.dataindex]
+            self.dataindex += 1
+            try:
+                self.acc = int(data)
+            except ValueError:
+                print ("### Error in reading data ###")
+                self.halt_good()
+            """
             print ("? ",end="")
             while True:
                 val = input()
@@ -127,7 +149,7 @@ class CESILObj(object):
                     self.acc = int(val)
                     break
                 except ValueError:
-                    print("REDO? ",end="")
+                    print("REDO? ",end="")"""
         elif operator == "OUT":
             print (str(self.acc), end="")
         elif operator == "LINE":
@@ -155,7 +177,7 @@ class CESILObj(object):
             elif operator == "DIVIDE":
                 if value == 0:
                     print ("### ERROR ### DIVIDE BY ZERO LINE "+str(self.linenum))
-                    sys.exit()
+                    self.halt_good()
                 else:
                     self.acc = int(self.acc / value)
         elif operator == "JUMP":
