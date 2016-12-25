@@ -10,4 +10,10 @@ DONE    PRINT   "The total is: "
         OUT
         LINE
         HALT
+       
+        %
+        1
+        2
+        3
+        -1
         
