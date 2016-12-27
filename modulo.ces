@@ -1,51 +1,59 @@
-        PRINT   "Modulo for CESIL"
+        PRINT       "Modulo for CESIL"
         LINE
         LINE
-LOOP    PRINT   "Enter the numerator : "
+LOOP    PRINT       "Enter the numerator : "
         IN      
-        STORE   NUMER
+        STORE       NUMER
         LINE
-        PRINT   "Enter the denominator : "
+        PRINT       "Enter the denominator : "
         IN      
-        STORE   DENOM
+        STORE       DENOM
         LINE
-        LOAD    NUMER
-        PRINT   "SUM: "
+        LOAD        NUMER
+        PRINT       "SUM: "
         OUT
-        PRINT   " divides into "
-        LOAD    DENOM
+        PRINT       " divides into "
+        LOAD        DENOM
         OUT
-        PRINT   " a total of "
-        LOAD    NUMER
-        DIVIDE  DENOM
+        PRINT       " a total of "
+        LOAD        NUMER
+        DIVIDE      DENOM
         OUT
-        PRINT   " times and has a remainder of "
-        MULTIPLYDENOM
-        STORE   EXACTVAL
-        LOAD    NUMER
-        SUBTRACTEXACTVAL
+        PRINT       " times and has a remainder of "
+        MULTIPLY    DENOM
+        STORE       EXACTVAL
+        LOAD        NUMER
+        SUBTRACT    EXACTVAL
         OUT
-        PRINT   "."
+        PRINT       "."
         LINE
         LINE
-        PRINT   "Do another sum?"
+        PRINT       "Do another sum?"
         LINE
-        PRINT   "Negative number to do another..."
+        PRINT       "Negative number to do another..."
         LINE
-        PRINT   "Zero to stop..."
+        PRINT       "Zero to stop..."
         LINE
-        PRINT   "Positive number to display inanity:"
+        PRINT       "Positive number to display inanity:"
         LINE
         LINE
-        PRINT   "Enter your choice now : "
+        PRINT       "Enter your choice now : "
         IN
-        JINEG   LOOP
-        JIZERO  HALTTHIS
-        JUMP    INANITY
+        JINEG       LOOP
+        JIZERO      HALTTHIS
+        JUMP        INANITY
 
 HALTTHISHALT
 
 INANITY LINE
-        PRINT   "You expect something clever?!"
+        PRINT       "You expect something clever?!"
         HALT
+        
+        %
+        16
+        6
+        -1
+        17
+        6
+        1
         

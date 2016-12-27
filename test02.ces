@@ -1,39 +1,41 @@
-        LOAD    0
-LOOP    STORE   TOTAL
-        LOAD    8
-        STORE   T2
-        LOAD    99
-        STORE   T3
-        LOAD    T2
-        PRINT   "Hi there"
-        PRINT   "KeeP going"
+        LOAD        0
+LOOP    STORE       TOTAL
+        LOAD        8
+        STORE       T2
+        LOAD        99
+        STORE       T3
+        LOAD        T2
+        PRINT       "Hi there"
+        PRINT       "Keep going"
         LINE
-        ADD     33
-        PRINT   "Accumulator is "
+        ADD         33
+        PRINT       "Accumulator is "
         OUT
-        ADD     T3
+        ADD         T3
         LINE
-        PRINT   "Accumulator is "
-        OUT
-
-        DIVIDE    4
-        LINE
-        PRINT   "Accumulator is "
+        PRINT       "Accumulator is "
         OUT
 
-        DIVIDE    T2
+        DIVIDE      4
         LINE
-        PRINT   "Accumulator is "
+        PRINT       "Accumulator is "
+        OUT
+
+        DIVIDE      T2
+        LINE
+        PRINT       "Accumulator is "
         OUT
         LINE
-        PRINT   "Enter an integer "
-        IN      InVal
+        PRINT       "Enter an integer "
+        IN          InVal
         LINE
-        PRINT   "You entered "
+        PRINT       "You entered "
         OUT
 
         LINE
-        PRINT   "So there!!"
+        PRINT       "So there!!"
         HALT
         
-
+        %
+        3
+        
