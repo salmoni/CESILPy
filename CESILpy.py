@@ -11,17 +11,14 @@ class CESILObj(object):
         try:
             fin = open(fname,'r')
         except IOError:
-            print("### ERROR ### CANNOT OPEN "+fname)
-            sys.exit()
+            print("### ERROR: CANNOT OPEN "+fname+" ###")
+            self.halt_good()
         try:
             script = fin.read()
         except:
-            print("### ERROR ### CANNOT READ "+fname)
-            sys.exit()
-        try:
-            fin.close()
-        except IOError:
-            print("Cannot close the file %s but will continue nevertheless"%fname)
+            print("### ERROR: CANNOT READ FILE "+fname+" ###")
+            self.halt_good()
+        fin.close()
         self.fname = fname
         self.script = script.split(os.linesep)
         self.data = []
@@ -36,6 +33,11 @@ class CESILObj(object):
         self.ParseLabels()
         self.ParseVariables()
         self.RunScript()
+
+    def ParseScript(self):
+        self.newscript = []
+        for line in self.script:
+            pass
 
     def ParseScript(self):
         self.newscript = []
@@ -63,6 +65,8 @@ class CESILObj(object):
                         if '"' not in word3:
                             # is not a string
                             word3 = word3.strip(' ')
+                        else:
+                            word3 = word3.lstrip()
                     self.newscript.append([word1, word2, word3])
 
     def ParseData(self):
@@ -102,7 +106,7 @@ class CESILObj(object):
         for idx, line in enumerate(self.newscript):
             try:
                 poss_var = line[2]
-                if poss_var[0] != '"':
+                if '"' not in poss_var:
                     if poss_var not in self.labels:
                         try:
                             val = int(poss_var)
@@ -112,6 +116,7 @@ class CESILObj(object):
                 pass
 
     def halt_good(self):
+        print()
         sys.exit()
 
     def RunScript(self):
@@ -126,6 +131,13 @@ class CESILObj(object):
                 if self.linenum > len(self.script):
                     self.halt_good()
 
+    def GetNumber(self, operand):
+        try:
+            value = int(operand)
+        except ValueError:
+            value = self.variables[operand]
+        return value
+
     def parse_line(self, line):
         # Run through commands in turn
         label = line[0]
@@ -139,35 +151,23 @@ class CESILObj(object):
             try:
                 self.acc = int(data)
             except ValueError:
-                print ("### Error in reading data ###")
+                print ("### ERROR: Non-integer data [ %s ]###"%data)
                 self.halt_good()
-            """
-            print ("? ",end="")
-            while True:
-                val = input()
-                try:
-                    self.acc = int(val)
-                    break
-                except ValueError:
-                    print("REDO? ",end="")"""
+            except IndexError:
+                print ("### ERROR: Not enough data to be read ###")
+                self.halt_good()
         elif operator == "OUT":
             print (str(self.acc), end="")
         elif operator == "LINE":
             print ("\n",end="")
         elif operator == "LOAD":
-            try:
-                self.acc = int(operand)
-            except ValueError:
-                self.acc = self.variables[operand]
+            self.acc = self.GetNumber(operand)
         elif operator == "STORE":
             self.variables[operand] = self.acc
         elif operator == "PRINT":
             print (operand.strip('"').strip('\n'), end="")
         elif (operator == "ADD") or (operator == "SUBTRACT") or (operator == "MULTIPLY") or (operator == "DIVIDE"):
-            try:
-                value = int(operand)
-            except ValueError:
-                value = self.variables[operand]
+            value = self.GetNumber(operand)
             if operator == "ADD":
                 self.acc = self.acc + value
             elif operator == "SUBTRACT":
@@ -176,7 +176,7 @@ class CESILObj(object):
                 self.acc = self.acc * value
             elif operator == "DIVIDE":
                 if value == 0:
-                    print ("### ERROR ### DIVIDE BY ZERO LINE "+str(self.linenum))
+                    print ("### ERROR: DIVIDE BY ZERO LINE "+str(self.linenum)+" ###")
                     self.halt_good()
                 else:
                     self.acc = int(self.acc / value)
@@ -193,6 +193,6 @@ if __name__ == "__main__":
     try:
         fname = sys.argv[1]
     except:
-        print("### ERROR ### NO FILENAME SPECIFIED")
+        print("### ERROR: NO FILENAME SPECIFIED ###")
         sys.exit()
     CESIL = CESILObj(fname)
