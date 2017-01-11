@@ -34,7 +34,7 @@ class CESILObj(object):
         self.ParseVariables()
         self.RunScript()
 
-    def ParseScript(self):
+    def ParseScript2(self):
         self.newscript = []
         for line in self.script:
             pass
@@ -89,7 +89,7 @@ class CESILObj(object):
         Duplicates are not allowed and cause termination.
         """
         for idx, line in enumerate(self.newscript):
-            if len(line[0]) > 0:
+            if len(line[0]) > 0: # this filter might not be needed
                 initword = line[0]
                 if initword not in self.labels.keys():
                     self.labels[initword] = idx
@@ -102,7 +102,6 @@ class CESILObj(object):
         This runs through and extracts all variable names and initialised them
         All variables are initialised to zero (0)
         """
-        vars = {}
         for idx, line in enumerate(self.newscript):
             try:
                 poss_var = line[2]
@@ -146,15 +145,16 @@ class CESILObj(object):
         if operator == "HALT":
             self.halt_good()
         elif operator == "IN":
-            data = self.data[self.dataindex]
+            try:
+                data = self.data[self.dataindex]
+            except IndexError:
+                print ("### ERROR: Not enough data to be read ###")
+                self.halt_good()
             self.dataindex += 1
             try:
                 self.acc = int(data)
             except ValueError:
                 print ("### ERROR: Non-integer data [ %s ]###"%data)
-                self.halt_good()
-            except IndexError:
-                print ("### ERROR: Not enough data to be read ###")
                 self.halt_good()
         elif operator == "OUT":
             print (str(self.acc), end="")
