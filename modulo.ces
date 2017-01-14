@@ -1,12 +1,12 @@
         PRINT       "Modulo for CESIL"
         LINE
         LINE
-LOOP    PRINT       "Enter the numerator : "
-        IN      
+* Get numerator
+LOOP    IN
         STORE       NUMER
         LINE
-        PRINT       "Enter the denominator : "
-        IN      
+* Get denominator
+        IN
         STORE       DENOM
         LINE
         LOAD        NUMER
@@ -26,29 +26,17 @@ LOOP    PRINT       "Enter the numerator : "
         SUBTRACT    EXACTVAL
         OUT
         PRINT       "."
-        LINE
-        LINE
-        PRINT       "Do another sum?"
-        LINE
-        PRINT       "Negative number to do another..."
-        LINE
-        PRINT       "Zero to stop..."
-        LINE
-        PRINT       "Positive number to display inanity:"
-        LINE
-        LINE
-        PRINT       "Enter your choice now : "
         IN
-        JINEG       LOOP
-        JIZERO      HALTTHIS
-        JUMP        INANITY
+        JINEG       END
+        JUMP        LOOP
+END     HALT
 
 HALTTHISHALT
 
 INANITY LINE
         PRINT       "You expect something clever?!"
         HALT
-        
+
         %
         16
         6
@@ -56,4 +44,3 @@ INANITY LINE
         17
         6
         1
-        
